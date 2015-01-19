@@ -19,7 +19,7 @@ namespace CPETime.Data.EntityFramework.Queries
 
         public IList<Break> ExecuteQuery()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 return model.EmployeeBreaks.Where(eb => eb.EmployeeId == _employee.Id)
                     .Select(eb => eb.Break)
                     .ToList();

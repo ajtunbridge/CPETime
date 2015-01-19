@@ -21,7 +21,7 @@ namespace CPETime.Data.EntityFramework.Model
         public int ClockEntryId { get; set; }
         public int EmployeeBreakId { get; set; }
     
-        public virtual ClockEntry ClockEntry { get; set; }
         public virtual EmployeeBreak EmployeeBreak { get; set; }
+        public virtual ClockEntry ClockEntry { get; set; }
     }
 }

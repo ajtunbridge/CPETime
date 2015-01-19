@@ -22,7 +22,7 @@ namespace CPETime.Data.EntityFramework.Commands
 
         public void ExecuteCommand()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 model.Breaks.Add(_breakToAdd);
                 model.SaveChanges();
             }

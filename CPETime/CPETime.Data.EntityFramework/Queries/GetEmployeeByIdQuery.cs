@@ -1,8 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿#region Using directives
+
 using System.Linq;
-using System.Text;
 using CPETime.Data.EntityFramework.Model;
+
+#endregion
 
 namespace CPETime.Data.EntityFramework.Queries
 {
@@ -12,12 +13,12 @@ namespace CPETime.Data.EntityFramework.Queries
 
         public GetEmployeeByIdQuery(int employeeId)
         {
-            _employeeId = employeeId;    
+            _employeeId = employeeId;
         }
 
         public Employee ExecuteQuery()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 return model.Employees.SingleOrDefault(e => e.Id == _employeeId);
             }
         }

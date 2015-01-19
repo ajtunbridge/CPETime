@@ -8,11 +8,11 @@ using CPETime.Data.EntityFramework.Model;
 
 namespace CPETime.Data.EntityFramework.Queries
 {
-    public class GetHoursWorkedThisWeekQuery
+    public class GetHoursWorkedLastWeekQuery
     {
         private readonly Employee _employee;
 
-        public GetHoursWorkedThisWeekQuery(Employee employee)
+        public GetHoursWorkedLastWeekQuery(Employee employee)
         {
             _employee = employee;
         }
@@ -20,12 +20,15 @@ namespace CPETime.Data.EntityFramework.Queries
         public TimeSpan ExecuteQuery()
         {
             using (var model = new CPETimeEntities()) {
-                DateTime startDate = DateTime.Today.StartOfWeek(DayOfWeek.Monday);
+                DateTime startDate = DateTime.Today.StartOfWeek(DayOfWeek.Monday).AddDays(-7);
+                DateTime endDate = startDate.AddDays(7);
 
                 IQueryable<ClockEntry> clockEntriesThisWeek = model.ClockEntries.Where(
-                    ce => ce.EmployeeId == _employee.Id && ce.ActualStart >= startDate && ce.ActualEnd != null);
+                    ce =>
+                        ce.EmployeeId == _employee.Id && ce.ActualStart >= startDate && ce.ActualStart <= endDate &&
+                        ce.ActualEnd != null);
 
-                var timeWorkedThisWeek = new TimeSpan();
+                var timeWorkedLastWeek = new TimeSpan();
 
                 foreach (ClockEntry clockEntry in clockEntriesThisWeek) {
                     DateTime startedAt = clockEntry.ModifiedStart ?? clockEntry.ActualStart;
@@ -38,6 +41,7 @@ namespace CPETime.Data.EntityFramework.Queries
                         TimeSpan breakLength = @break.EndTime.Subtract(@break.StartTime);
 
                         if (breakAdjustment.BreakWasSkipped && @break.IsPaid) {
+                            // add any paid breaks that were skipped
                             shiftLength += breakLength;
                         }
                         else {
@@ -71,10 +75,10 @@ namespace CPETime.Data.EntityFramework.Queries
                         shiftLength -= breakLength;
                     }
 
-                    timeWorkedThisWeek = timeWorkedThisWeek.Add(shiftLength);
+                    timeWorkedLastWeek = timeWorkedLastWeek.Add(shiftLength);
                 }
 
-                return timeWorkedThisWeek;
+                return timeWorkedLastWeek;
             }
         }
     }

@@ -11,6 +11,8 @@
     <AssemblyName>CPETime</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">.\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -75,6 +77,12 @@
     <Compile Include="Views\KioskMainView.Designer.cs">
       <DependentUpon>KioskMainView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\TimeSheetsView.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Views\TimeSheetsView.Designer.cs">
+      <DependentUpon>TimeSheetsView.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="KioskForm.resx">
       <DependentUpon>KioskForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -90,6 +98,9 @@
     </Compile>
     <EmbeddedResource Include="Views\KioskMainView.resx">
       <DependentUpon>KioskMainView.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\TimeSheetsView.resx">
+      <DependentUpon>TimeSheetsView.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />
@@ -116,7 +127,38 @@
   <ItemGroup>
     <None Include="Resources\CPE.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloseButtonHighlighted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CloseButtonNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackButtonHighlighted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\BackButtonNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MinimizeHighlighted.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\MinimizeNormal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AppIcon.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\AppIconImage.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+  </Target>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

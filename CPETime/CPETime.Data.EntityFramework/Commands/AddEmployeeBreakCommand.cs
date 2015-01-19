@@ -20,7 +20,7 @@ namespace CPETime.Data.EntityFramework.Commands
 
         public void ExecuteCommand()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 EmployeeBreak existing =
                     model.EmployeeBreaks.SingleOrDefault(eb => eb.EmployeeId == _employee.Id && eb.BreakId == _break.Id);
                 if (existing == null) {

@@ -12,11 +12,10 @@ public static class DateTimeExtensions
     {
         int diff = dt.DayOfWeek - startOfWeek;
 
-        if (diff < 0)
-        {
+        if (diff < 0) {
             diff += 7;
         }
 
-        return dt.AddDays(-1 * diff).Date;
+        return dt.AddDays(-1*diff).Date;
     }
 }

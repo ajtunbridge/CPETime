@@ -2,7 +2,6 @@
 
 using System;
 using CPETime.Data.EntityFramework.Model;
-using CPETime.Domain;
 
 #endregion
 
@@ -11,8 +10,8 @@ namespace CPETime.ViewModels
     public class KioskMainViewClockedInModel
     {
         private readonly Employee _employee;
-        private readonly DateTime _shiftFinishedAt;
         private readonly Double _hoursLeftThisWeek;
+        private readonly DateTime _shiftFinishedAt;
 
         public KioskMainViewClockedInModel(Employee employee, DateTime shiftFinishedAt, Double hoursLeftThisWeek)
         {

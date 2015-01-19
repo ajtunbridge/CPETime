@@ -18,7 +18,7 @@ namespace CPETime.Data.EntityFramework.Queries
 
         public Break ExecuteQuery()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 return model.Breaks.SingleOrDefault(b => b.Id == _breakId);
             }
         }

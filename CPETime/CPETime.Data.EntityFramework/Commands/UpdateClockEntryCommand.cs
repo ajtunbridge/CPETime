@@ -22,7 +22,7 @@ namespace CPETime.Data.EntityFramework.Commands
         {
             var action = ClockEntryAction.ClockedIn;
 
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 ClockEntry lastClockEntry = model.ClockEntries
                     .Where(c => c.EmployeeId == _employee.Id)
                     .OrderByDescending(c => c.ActualStart)

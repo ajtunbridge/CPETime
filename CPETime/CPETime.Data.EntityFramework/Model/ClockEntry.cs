@@ -26,7 +26,7 @@ namespace CPETime.Data.EntityFramework.Model
         public Nullable<System.DateTime> ModifiedEnd { get; set; }
         public int EmployeeId { get; set; }
     
-        public virtual Employee Employee { get; set; }
         public virtual ICollection<BreakAdjustment> BreakAdjustments { get; set; }
+        public virtual Employee Employee { get; set; }
     }
 }

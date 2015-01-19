@@ -1,8 +1,6 @@
 ﻿#region Using directives
 
-using System;
 using CPETime.Data.EntityFramework.Model;
-using CPETime.Domain;
 
 #endregion
 
@@ -11,8 +9,8 @@ namespace CPETime.ViewModels
     public class KioskMainViewClockedOutModel
     {
         private readonly Employee _employee;
-        private readonly double _hoursWorked;
         private readonly double _hoursLeftThisWeek;
+        private readonly double _hoursWorked;
 
         public KioskMainViewClockedOutModel(Employee employee, double hoursWorked, double hoursLeftThisWeek)
         {

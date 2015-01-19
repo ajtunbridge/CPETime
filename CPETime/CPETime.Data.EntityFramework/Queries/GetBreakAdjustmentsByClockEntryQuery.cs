@@ -19,7 +19,7 @@ namespace CPETime.Data.EntityFramework.Queries
 
         public IList<BreakAdjustment> ExecuteQuery()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 return model.BreakAdjustments.Where(b => b.ClockEntryId == _clockEntry.Id).ToList();
             }
         }

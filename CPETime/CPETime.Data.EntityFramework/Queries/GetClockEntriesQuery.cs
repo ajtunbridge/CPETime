@@ -36,7 +36,7 @@ namespace CPETime.Data.EntityFramework.Queries
 
         public IList<ClockEntry> ExecuteQuery()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 List<ClockEntry> result = model.ClockEntries
                     .Where(c => c.ActualStart.Date >= _startDate && c.ActualStart.Date <= _endDate)
                     .Where(c => c.EmployeeId == _employee.Id)

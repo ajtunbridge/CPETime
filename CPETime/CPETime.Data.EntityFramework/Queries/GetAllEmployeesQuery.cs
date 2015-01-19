@@ -12,7 +12,7 @@ namespace CPETime.Data.EntityFramework.Queries
     {
         public IList<Employee> ExecuteQuery()
         {
-            using (var model = new CPETimeModelContainer()) {
+            using (var model = new CPETimeEntities()) {
                 return model.Employees.ToList();
             }
         }

@@ -28,26 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.kioskMainView1 = new CPETime.Views.KioskMainView();
+            this.kioskMainView = new CPETime.Views.KioskMainView();
             this.SuspendLayout();
             // 
-            // kioskMainView1
+            // kioskMainView
             // 
-            this.kioskMainView1.BackColor = System.Drawing.Color.White;
-            this.kioskMainView1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.kioskMainView1.Location = new System.Drawing.Point(0, 0);
-            this.kioskMainView1.Name = "kioskMainView1";
-            this.kioskMainView1.Size = new System.Drawing.Size(621, 416);
-            this.kioskMainView1.TabIndex = 0;
+            this.kioskMainView.BackColor = System.Drawing.Color.White;
+            this.kioskMainView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.kioskMainView.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.kioskMainView.Location = new System.Drawing.Point(0, 0);
+            this.kioskMainView.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.kioskMainView.Name = "kioskMainView";
+            this.kioskMainView.Size = new System.Drawing.Size(1097, 784);
+            this.kioskMainView.TabIndex = 0;
+            this.kioskMainView.MouseDown += new System.Windows.Forms.MouseEventHandler(this.kioskMainView_MouseDown);
             // 
             // KioskForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(621, 416);
-            this.Controls.Add(this.kioskMainView1);
+            this.ClientSize = new System.Drawing.Size(1097, 784);
+            this.Controls.Add(this.kioskMainView);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.KeyPreview = true;
+            this.MinimizeBox = false;
             this.Name = "KioskForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "CPE Time";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.KioskForm_FormClosing);
             this.Load += new System.EventHandler(this.KioskForm_Load);
@@ -58,7 +64,7 @@
 
         #endregion
 
-        private Views.KioskMainView kioskMainView1;
+        private Views.KioskMainView kioskMainView;
 
 
 

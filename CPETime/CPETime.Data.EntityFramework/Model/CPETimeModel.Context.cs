@@ -13,10 +13,10 @@ namespace CPETime.Data.EntityFramework.Model
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class CPETimeModelContainer : DbContext
+    public partial class CPETimeEntities : DbContext
     {
-        public CPETimeModelContainer()
-            : base("name=CPETimeModelContainer")
+        public CPETimeEntities()
+            : base("name=CPETimeEntities")
         {
         }
     
@@ -25,10 +25,10 @@ namespace CPETime.Data.EntityFramework.Model
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<Employee> Employees { get; set; }
+        public virtual DbSet<BreakAdjustment> BreakAdjustments { get; set; }
         public virtual DbSet<ClockEntry> ClockEntries { get; set; }
         public virtual DbSet<EmployeeBreak> EmployeeBreaks { get; set; }
-        public virtual DbSet<BreakAdjustment> BreakAdjustments { get; set; }
+        public virtual DbSet<Employee> Employees { get; set; }
         public virtual DbSet<Break> Breaks { get; set; }
     }
 }
