@@ -1,0 +1,136 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{72046430-EFB0-42E7-8A93-0CB676AAC5DC}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CPETime.Data.EntityFramework</RootNamespace>
+    <AssemblyName>CPETime.Data.EntityFramework</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net40\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer">
+      <HintPath>..\packages\EntityFramework.6.1.2\lib\net40\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Commands\AddBreakCommand.cs" />
+    <Compile Include="Commands\AddEmployeeBreakCommand.cs" />
+    <Compile Include="Commands\AddEmployeeCommand.cs" />
+    <Compile Include="Commands\UpdateClockEntryCommand.cs" />
+    <Compile Include="Model\Break.cs">
+      <DependentUpon>CPETimeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\BreakAdjustment.cs">
+      <DependentUpon>CPETimeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\ClockEntry.cs">
+      <DependentUpon>CPETimeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CPETimeModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CPETimeModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CPETimeModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CPETimeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\CPETimeModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CPETimeModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="Model\Employee.cs">
+      <DependentUpon>CPETimeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Model\EmployeeBreak.cs">
+      <DependentUpon>CPETimeModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Queries\GetAllBreaksQuery.cs" />
+    <Compile Include="Queries\GetAllEmployeesQuery.cs" />
+    <Compile Include="Queries\GetBreakAdjustmentsByClockEntryQuery.cs" />
+    <Compile Include="Queries\GetBreakByIdQuery.cs" />
+    <Compile Include="Queries\GetClockEntriesQuery.cs" />
+    <Compile Include="Queries\GetEmployeeBreaksQuery.cs" />
+    <Compile Include="Queries\GetEmployeeByIdQuery.cs" />
+    <Compile Include="Queries\GetHoursWorkedThisWeekQuery.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <EntityDeploy Include="Model\CPETimeModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CPETimeModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <None Include="Model\CPETimeModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CPETimeModel.Context.cs</LastGenOutput>
+      <DependentUpon>CPETimeModel.edmx</DependentUpon>
+    </None>
+    <None Include="Model\CPETimeModel.edmx.diagram">
+      <DependentUpon>CPETimeModel.edmx</DependentUpon>
+    </None>
+    <None Include="Model\CPETimeModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>CPETimeModel.cs</LastGenOutput>
+      <DependentUpon>CPETimeModel.edmx</DependentUpon>
+    </None>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Model\CPETimeModel.edmx.sql" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\CPETime.Domain\CPETime.Domain.csproj">
+      <Project>{845bff86-6839-4155-81f0-caae1ea112cd}</Project>
+      <Name>CPETime.Domain</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

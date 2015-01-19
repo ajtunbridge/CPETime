@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="42792f99e5a0403a99906dd8279ef3fe" Name="Diagram1" ZoomLevel="120" >
+        <EntityTypeShape EntityType="CPETimeModel.Employee" Width="1.5" PointX="0.75" PointY="1" />
+        <EntityTypeShape EntityType="CPETimeModel.ClockEntry" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="CPETimeModel.EmployeeBreak" Width="1.75" PointX="7.5" PointY="1.125" />
+        <EntityTypeShape EntityType="CPETimeModel.BreakAdjustment" Width="1.5" PointX="5.25" PointY="1" />
+        <AssociationConnector Association="CPETimeModel.EmployeeClockEntry" />
+        <AssociationConnector Association="CPETimeModel.ClockEntryBreakAdjustment" />
+        <AssociationConnector Association="CPETimeModel.BreakAdjustmentEmployeeBreak" />
+        <AssociationConnector Association="CPETimeModel.EmployeeEmployeeBreak" />
+        <EntityTypeShape EntityType="CPETimeModel.Break" Width="1.5" PointX="0.75" PointY="4.875" />
+        <AssociationConnector Association="CPETimeModel.FK_BreakEmployeeBreak" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

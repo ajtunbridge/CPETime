@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="CPETimeModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="BreakAdjustments">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActualStartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="ActualEndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="BreakWasSkipped" Type="bit" Nullable="false" />
+          <Property Name="ClockEntryId" Type="int" Nullable="false" />
+          <Property Name="EmployeeBreakId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Breaks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="StartTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="EndTime" Type="time" Precision="7" Nullable="false" />
+          <Property Name="IsPaid" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClockEntries">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActualStart" Type="datetime" Nullable="false" />
+          <Property Name="ModifiedStart" Type="datetime" />
+          <Property Name="ActualEnd" Type="datetime" />
+          <Property Name="ModifiedEnd" Type="datetime" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="EmployeeBreaks">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="BreakId" Type="int" Nullable="false" />
+          <Property Name="EmployeeId" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Employees">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="FirstName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="MiddleName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="LastName" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="DateOfBirth" Type="datetime" Nullable="false" />
+          <Property Name="IsNightShift" Type="bit" Nullable="false" />
+          <Property Name="BasicShiftHours" Type="float" Nullable="false" />
+          <Property Name="HoursPerWeek" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_BreakAdjustmentEmployeeBreak">
+          <End Role="EmployeeBreaks" Type="Self.EmployeeBreaks" Multiplicity="1" />
+          <End Role="BreakAdjustments" Type="Self.BreakAdjustments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeBreaks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreakAdjustments">
+              <PropertyRef Name="EmployeeBreakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_BreakEmployeeBreak">
+          <End Role="Breaks" Type="Self.Breaks" Multiplicity="1" />
+          <End Role="EmployeeBreaks" Type="Self.EmployeeBreaks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Breaks">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeBreaks">
+              <PropertyRef Name="BreakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ClockEntryBreakAdjustment">
+          <End Role="ClockEntries" Type="Self.ClockEntries" Multiplicity="1" />
+          <End Role="BreakAdjustments" Type="Self.BreakAdjustments" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClockEntries">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreakAdjustments">
+              <PropertyRef Name="ClockEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeClockEntry">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="ClockEntries" Type="Self.ClockEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClockEntries">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_EmployeeEmployeeBreak">
+          <End Role="Employees" Type="Self.Employees" Multiplicity="1" />
+          <End Role="EmployeeBreaks" Type="Self.EmployeeBreaks" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employees">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeBreaks">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="CPETimeModelStoreContainer">
+          <EntitySet Name="BreakAdjustments" EntityType="Self.BreakAdjustments" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Breaks" EntityType="Self.Breaks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ClockEntries" EntityType="Self.ClockEntries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="EmployeeBreaks" EntityType="Self.EmployeeBreaks" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Employees" EntityType="Self.Employees" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_BreakAdjustmentEmployeeBreak" Association="Self.FK_BreakAdjustmentEmployeeBreak">
+            <End Role="EmployeeBreaks" EntitySet="EmployeeBreaks" />
+            <End Role="BreakAdjustments" EntitySet="BreakAdjustments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_BreakEmployeeBreak" Association="Self.FK_BreakEmployeeBreak">
+            <End Role="Breaks" EntitySet="Breaks" />
+            <End Role="EmployeeBreaks" EntitySet="EmployeeBreaks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ClockEntryBreakAdjustment" Association="Self.FK_ClockEntryBreakAdjustment">
+            <End Role="ClockEntries" EntitySet="ClockEntries" />
+            <End Role="BreakAdjustments" EntitySet="BreakAdjustments" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeClockEntry" Association="Self.FK_EmployeeClockEntry">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="ClockEntries" EntitySet="ClockEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_EmployeeEmployeeBreak" Association="Self.FK_EmployeeEmployeeBreak">
+            <End Role="Employees" EntitySet="Employees" />
+            <End Role="EmployeeBreaks" EntitySet="EmployeeBreaks" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="CPETimeModel" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="CPETimeModelContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Employees" EntityType="CPETimeModel.Employee" />
+          <EntitySet Name="ClockEntries" EntityType="CPETimeModel.ClockEntry" />
+          <EntitySet Name="EmployeeBreaks" EntityType="CPETimeModel.EmployeeBreak" />
+          <EntitySet Name="BreakAdjustments" EntityType="CPETimeModel.BreakAdjustment" />
+          <AssociationSet Name="EmployeeClockEntry" Association="CPETimeModel.EmployeeClockEntry">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="ClockEntry" EntitySet="ClockEntries" />
+          </AssociationSet>
+          <AssociationSet Name="ClockEntryBreakAdjustment" Association="CPETimeModel.ClockEntryBreakAdjustment">
+            <End Role="ClockEntry" EntitySet="ClockEntries" />
+            <End Role="BreakAdjustment" EntitySet="BreakAdjustments" />
+          </AssociationSet>
+          <AssociationSet Name="BreakAdjustmentEmployeeBreak" Association="CPETimeModel.BreakAdjustmentEmployeeBreak">
+            <End Role="BreakAdjustment" EntitySet="BreakAdjustments" />
+            <End Role="EmployeeBreak" EntitySet="EmployeeBreaks" />
+          </AssociationSet>
+          <AssociationSet Name="EmployeeEmployeeBreak" Association="CPETimeModel.EmployeeEmployeeBreak">
+            <End Role="Employee" EntitySet="Employees" />
+            <End Role="EmployeeBreak" EntitySet="EmployeeBreaks" />
+          </AssociationSet>
+          <EntitySet Name="Breaks" EntityType="CPETimeModel.Break" />
+          <AssociationSet Name="FK_BreakEmployeeBreak" Association="CPETimeModel.FK_BreakEmployeeBreak">
+            <End Role="Break" EntitySet="Breaks" />
+            <End Role="EmployeeBreak" EntitySet="EmployeeBreaks" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Employee">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FirstName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="MiddleName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="LastName" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="DateOfBirth" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IsNightShift" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ClockEntries" Relationship="CPETimeModel.EmployeeClockEntry" FromRole="Employee" ToRole="ClockEntry" />
+          <NavigationProperty Name="EmployeeBreaks" Relationship="CPETimeModel.EmployeeEmployeeBreak" FromRole="Employee" ToRole="EmployeeBreak" />
+          <Property Name="BasicShiftHours" Type="Double" Nullable="false" />
+          <Property Name="HoursPerWeek" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ClockEntry">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActualStart" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="ModifiedStart" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="ActualEnd" Type="DateTime" Nullable="true" Precision="3" />
+          <Property Name="ModifiedEnd" Type="DateTime" Nullable="true" Precision="3" />
+          <NavigationProperty Name="Employee" Relationship="CPETimeModel.EmployeeClockEntry" FromRole="ClockEntry" ToRole="Employee" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="BreakAdjustments" Relationship="CPETimeModel.ClockEntryBreakAdjustment" FromRole="ClockEntry" ToRole="BreakAdjustment" />
+        </EntityType>
+        <EntityType Name="EmployeeBreak">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="BreakAdjustments" Relationship="CPETimeModel.BreakAdjustmentEmployeeBreak" FromRole="EmployeeBreak" ToRole="BreakAdjustment" />
+          <Property Name="BreakId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="CPETimeModel.EmployeeEmployeeBreak" FromRole="EmployeeBreak" ToRole="Employee" />
+          <Property Name="EmployeeId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Break" Relationship="CPETimeModel.FK_BreakEmployeeBreak" FromRole="EmployeeBreak" ToRole="Break" />
+        </EntityType>
+        <EntityType Name="BreakAdjustment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActualStartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="ActualEndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="BreakWasSkipped" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="ClockEntry" Relationship="CPETimeModel.ClockEntryBreakAdjustment" FromRole="BreakAdjustment" ToRole="ClockEntry" />
+          <Property Name="ClockEntryId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="EmployeeBreak" Relationship="CPETimeModel.BreakAdjustmentEmployeeBreak" FromRole="BreakAdjustment" ToRole="EmployeeBreak" />
+          <Property Name="EmployeeBreakId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="EmployeeClockEntry">
+          <End Type="CPETimeModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="CPETimeModel.ClockEntry" Role="ClockEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ClockEntry">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="ClockEntryBreakAdjustment">
+          <End Type="CPETimeModel.ClockEntry" Role="ClockEntry" Multiplicity="1" />
+          <End Type="CPETimeModel.BreakAdjustment" Role="BreakAdjustment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ClockEntry">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreakAdjustment">
+              <PropertyRef Name="ClockEntryId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="BreakAdjustmentEmployeeBreak">
+          <End Type="CPETimeModel.BreakAdjustment" Role="BreakAdjustment" Multiplicity="*" />
+          <End Type="CPETimeModel.EmployeeBreak" Role="EmployeeBreak" Multiplicity="1" />
+          <ReferentialConstraint>
+            <Principal Role="EmployeeBreak">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="BreakAdjustment">
+              <PropertyRef Name="EmployeeBreakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="EmployeeEmployeeBreak">
+          <End Type="CPETimeModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="CPETimeModel.EmployeeBreak" Role="EmployeeBreak" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeBreak">
+              <PropertyRef Name="EmployeeId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Break">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="EndTime" Type="Time" Nullable="false" Precision="7" />
+          <Property Name="IsPaid" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="EmployeeBreaks" Relationship="CPETimeModel.FK_BreakEmployeeBreak" FromRole="Break" ToRole="EmployeeBreak" />
+        </EntityType>
+        <Association Name="FK_BreakEmployeeBreak">
+          <End Type="CPETimeModel.Break" Role="Break" Multiplicity="1" />
+          <End Type="CPETimeModel.EmployeeBreak" Role="EmployeeBreak" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Break">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="EmployeeBreak">
+              <PropertyRef Name="BreakId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="CPETimeModelStoreContainer" CdmEntityContainer="CPETimeModelContainer">
+    <EntitySetMapping Name="Employees">
+      <EntityTypeMapping TypeName="IsTypeOf(CPETimeModel.Employee)">
+        <MappingFragment StoreEntitySet="Employees">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="FirstName" ColumnName="FirstName" />
+          <ScalarProperty Name="MiddleName" ColumnName="MiddleName" />
+          <ScalarProperty Name="LastName" ColumnName="LastName" />
+          <ScalarProperty Name="DateOfBirth" ColumnName="DateOfBirth" />
+          <ScalarProperty Name="IsNightShift" ColumnName="IsNightShift" />
+          <ScalarProperty Name="BasicShiftHours" ColumnName="BasicShiftHours" />
+          <ScalarProperty Name="HoursPerWeek" ColumnName="HoursPerWeek" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ClockEntries">
+      <EntityTypeMapping TypeName="IsTypeOf(CPETimeModel.ClockEntry)">
+        <MappingFragment StoreEntitySet="ClockEntries">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ActualStart" ColumnName="ActualStart" />
+          <ScalarProperty Name="ModifiedStart" ColumnName="ModifiedStart" />
+          <ScalarProperty Name="ActualEnd" ColumnName="ActualEnd" />
+          <ScalarProperty Name="ModifiedEnd" ColumnName="ModifiedEnd" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployeeBreaks">
+      <EntityTypeMapping TypeName="IsTypeOf(CPETimeModel.EmployeeBreak)">
+        <MappingFragment StoreEntitySet="EmployeeBreaks">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BreakId" ColumnName="BreakId" />
+          <ScalarProperty Name="EmployeeId" ColumnName="EmployeeId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="BreakAdjustments">
+      <EntityTypeMapping TypeName="IsTypeOf(CPETimeModel.BreakAdjustment)">
+        <MappingFragment StoreEntitySet="BreakAdjustments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ActualStartTime" ColumnName="ActualStartTime" />
+          <ScalarProperty Name="ActualEndTime" ColumnName="ActualEndTime" />
+          <ScalarProperty Name="BreakWasSkipped" ColumnName="BreakWasSkipped" />
+          <ScalarProperty Name="ClockEntryId" ColumnName="ClockEntryId" />
+          <ScalarProperty Name="EmployeeBreakId" ColumnName="EmployeeBreakId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <EntitySetMapping Name="Breaks">
+            <EntityTypeMapping TypeName="CPETimeModel.Break">
+              <MappingFragment StoreEntitySet="Breaks">
+                <ScalarProperty Name="IsPaid" ColumnName="IsPaid" />
+                <ScalarProperty Name="EndTime" ColumnName="EndTime" />
+                <ScalarProperty Name="StartTime" ColumnName="StartTime" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
